@@ -42,7 +42,7 @@ public class runtm {
 
     private static boolean doTuring() {
         while (true) {
-            print();
+//            print();
 
             TMState s = listOfStates.get(currentState);
             TMTransition t = s.getTransition(String.valueOf(currentCell.getValue()));
@@ -207,11 +207,11 @@ public class runtm {
         System.out.print("[");
         for (int i = 0; i < s.length; i++) {
             if (i == currentCellNumber) {
-                System.out.print(ANSI_CYAN_BACKGROUND+ ANSI_PURPLE+ s[i] + ANSI_RESET);
+                System.out.print(ANSI_CYAN_BACKGROUND + ANSI_RED + s[i] + ANSI_RESET);
             } else {
                 System.out.print(s[i]);
             }
-            if (i != s.length -1)System.out.print(", ");
+            if (i != s.length - 1) System.out.print(", ");
         }
         System.out.print("]\n\n");
     }

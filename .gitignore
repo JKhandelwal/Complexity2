@@ -2,5 +2,6 @@
 */.DS_Store
 .idea/*
 .idea
-out/*
+*out/*
 *Complexity2.iml
+out/production/*
