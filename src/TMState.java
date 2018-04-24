@@ -3,8 +3,9 @@ import java.util.HashMap;
 public class TMState{
 
 	//hash map stores the input to that state and the corresponding transiton state 
-	private HashMap <String, String > transitions = new HashMap<>();
+	private HashMap <String, TMTransition > transitions = new HashMap<>();
 	private boolean acceptedState;
+
 	/**
 	 * This initialises the state to match to a state in the automaton. 
 	 * @param acceptedState whether this state accepts or not.
@@ -26,10 +27,8 @@ public class TMState{
 	 * adds a line to the transition table
 	 */
 	public void enterTransition(String[] inputs){
-		String enteredInput = inputs[1];
-		String nextState = inputs[2];
 		//puts the input and the next state into the hash map
-		transitions.put(enteredInput, nextState);
+		transitions.put(inputs[1], new TMTransition(inputs[2],inputs[3],inputs[4]));
 	}
 	
 	/**
@@ -37,8 +36,7 @@ public class TMState{
 	 * @param userInput gets the character input from the user.
 	 * @return this returns the state to go into next based on the input, null if there is no defined transition in the state the machine is in. 
 	 */
-	public String doTransition(String userInput){
-		//if the map contains a transition for the input given it returns the state it needs to go to otherwise null
-        return transitions.getOrDefault(userInput, null);
+	public TMTransition getTransition(String userInput){
+        return transitions.getOrDefault(userInput, new TMTransition(null,null,null));
 	}	
 }

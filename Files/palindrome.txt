@@ -1,0 +1,44 @@
+states 11
+s
+s01
+s02
+s03
+s11
+s12
+s13
+s21
+s22
+s23
+a +
+alphabet 3 0 1 2
+s 0 s01 _ R
+s 1 s11 _ R
+s 2 s21 _ R
+s _ a _ S
+s01 0 s01 0 R
+s01 1 s01 1 R
+s01 2 s01 2 R
+s01 _ s02 _ L
+s02 0 s03 _ L
+s03 0 s03 0 L
+s03 1 s03 1 L
+s03 2 s03 2 L
+s03 _ s _ R
+s11 0 s11 0 R
+s11 1 s11 1 R
+s11 2 s11 2 R
+s11 _ s12 _ L
+s12 1 s13 _ L
+s13 0 s13 0 L
+s13 1 s13 1 L
+s13 2 s13 2 L
+s13 _ s _ R
+s21 0 s21 0 R
+s21 1 s21 1 R
+s21 2 s21 2 R
+s21 _ s22 _ L
+s22 2 s23 _ L
+s23 0 s23 0 L
+s23 1 s23 1 L
+s23 2 s23 2 L
+s23 _ s _ R
