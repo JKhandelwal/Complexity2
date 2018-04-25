@@ -5,13 +5,14 @@ import java.util.HashSet;
 
 
 public class runtm {
-    private static HashMap<String, TMState> listOfStates = new HashMap<>();
-    private static HashSet<String> alphabet = new HashSet<>();
-    private static String currentState;
-    private static TMCell currentCell;
-    private static TMCell initialCell;
-    private static int currentCellNumber;
-    private static int numberOfCells;
+    private HashMap<String, TMState> listOfStates = new HashMap<>();
+    private HashSet<String> alphabet = new HashSet<>();
+    private String currentState;
+    private TMCell currentCell;
+    private TMCell initialCell;
+    private int currentCellNumber;
+    private int numberOfCells;
+    private boolean printDisabled = false;
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -30,42 +31,54 @@ public class runtm {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    public runtm(boolean p){
+        printDisabled = p;
+    }
     public static void main(String[] args) {
+        if (args.length != 2){
+            System.out.println("Error In Arguments, must be Turing Filename, and Input filename");
+        }
         File f1 = new File(args[0]);
         File f2 = new File(args[1]);
+        runtm t = new runtm(false);
+        if (t.run(f1, f2)) System.out.println("ACCEPTING");
+        else System.out.println("NOT ACCEPTING");
+    }
+
+    public boolean run(File f1, File f2) {
         readTM(f1);
         putInput(f2);
         boolean res = doTuring();
-        if (res) System.out.println("The Turing Machine halted in an accepting state");
-        else System.out.println("The Turing Machine halted in a non accepting state");
+        if (res) return true;
+        return false;
     }
 
-    private static boolean doTuring() {
+    private boolean doTuring() {
         while (true) {
-//            print();
-
+            if (!printDisabled) print();
             TMState s = listOfStates.get(currentState);
             TMTransition t = s.getTransition(String.valueOf(currentCell.getValue()));
+            assert t != null;
             if (t.getMoveDir() == null) {
-                System.out.println("There are no further transitions available ");
                 if (s.checkAcceptedState()) {
                     return true;
                 } else {
                     return false;
                 }
             } else {
-//                System.out.println("The transition is to state " + t.getNextState() + " replacing the contents with " + t.getOutput() + " moving " + t.getMoveDir());
                 move(t);
             }
         }
     }
 
-    private static void putInput(File f2) {
+    private void putInput(File f2) {
         String inputString;
         try {
             BufferedReader br = new BufferedReader(new FileReader(f2));
             inputString = br.readLine();
             br.close();
+            if (!printDisabled) System.out.println("Input " + inputString);
+            numberOfCells = 0;
             for (int i = 0; i < inputString.length(); i++) {
                 if (i == 0) {
                     initialCell = new TMCell(String.valueOf(inputString.charAt(i)));
@@ -79,7 +92,6 @@ public class runtm {
                 numberOfCells++;
             }
             currentCell = initialCell;
-            currentCellNumber = 0;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -87,7 +99,7 @@ public class runtm {
         }
     }
 
-    public static void readTM(File f1) {
+    public void readTM(File f1) {
         String line;
         BufferedReader br;
         try {
@@ -146,7 +158,7 @@ public class runtm {
         }
     }
 
-    public static void move(TMTransition t) {
+    public void move(TMTransition t) {
         currentCell.setValue(t.getOutput());
         switch (t.getMoveDir()) {
             case "L":
@@ -162,7 +174,7 @@ public class runtm {
         return;
     }
 
-    public static void moveLeft() {
+    public void moveLeft() {
         if (currentCell.getPrevious() != null) {
             currentCell = currentCell.getPrevious();
             currentCellNumber--;
@@ -175,7 +187,7 @@ public class runtm {
         }
     }
 
-    public static void moveRight() {
+    public void moveRight() {
         currentCellNumber++;
         if (currentCell.getNext() != null) {
             currentCell = currentCell.getNext();
@@ -188,7 +200,7 @@ public class runtm {
         }
     }
 
-    public static void print() {
+    public void print() {
         TMCell p = currentCell;
         int count = currentCellNumber;
         String[] s = new String[numberOfCells];
