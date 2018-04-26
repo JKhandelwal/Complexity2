@@ -11,7 +11,7 @@ public class TestPalindrome {
     @Test
     public void TestOne() {
         File f1 = new File("Files/InputFiles/TestPalindrome1.txt");
-        File f2 = new File("Files/palindrome.txt");
+        File f2 = new File("Files/DescriptionFiles/palindrome.txt");
         for (int i = 0; i < 3; i++) {
             try {
                 BufferedWriter br = new BufferedWriter(new FileWriter(f1));
@@ -34,7 +34,7 @@ public class TestPalindrome {
     @Test
     public void TestTwo() {
         File f1 = new File("Files/InputFiles/TestPalindrome2.txt");
-        File f2 = new File("Files/palindrome.txt");
+        File f2 = new File("Files/Description/palindrome.txt");
         for (int i = 2; i < 100; i++) {
             for (int j = 0; j < 10; j++) {
                 try {
@@ -60,7 +60,7 @@ public class TestPalindrome {
     @Test
     public void TestThree() {
         File f1 = new File("Files/InputFiles/TestPalindrome3.txt");
-        File f2 = new File("Files/palindrome.txt");
+        File f2 = new File("Files/DescriptionFiles/palindrome.txt");
         for (int i = 2; i < 100; i++) {
             for (int j = 0; j < 10; j++) {
                 String s= "";

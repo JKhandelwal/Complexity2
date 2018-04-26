@@ -1,0 +1,7 @@
+states 2
+s
+a +
+alphabet 2 0 1
+s 1 s 0 R
+s 0 a 1 S
+s _ a 1 S

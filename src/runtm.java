@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,6 +12,8 @@ public class runtm {
     private int currentCellNumber;
     private int numberOfCells;
     private boolean printDisabled = false;
+    private int numberOfTransitions= 0;
+    private int lengthOfInput = 0;
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -40,25 +41,25 @@ public class runtm {
         }
         File f1 = new File(args[0]);
         File f2 = new File(args[1]);
-        runtm t = new runtm(false);
+        runtm t = new runtm(true);
         if (t.run(f1, f2)) System.out.println("ACCEPTING");
         else System.out.println("NOT ACCEPTING");
+        System.out.println("Input size is " + t.lengthOfInput + " Number of Transitions "+  t.numberOfTransitions );
+        t.print();
     }
 
     public boolean run(File f1, File f2) {
         readTM(f1);
         putInput(f2);
-        boolean res = doTuring();
-        if (res) return true;
-        return false;
+        return performTransitions();
     }
 
-    private boolean doTuring() {
+    private boolean performTransitions() {
         while (true) {
             if (!printDisabled) print();
             TMState s = listOfStates.get(currentState);
             TMTransition t = s.getTransition(String.valueOf(currentCell.getValue()));
-            assert t != null;
+            if (!printDisabled) System.out.println("Current State " + currentState);
             if (t.getMoveDir() == null) {
                 if (s.checkAcceptedState()) {
                     return true;
@@ -66,7 +67,9 @@ public class runtm {
                     return false;
                 }
             } else {
+                if(!printDisabled) System.out.println("Next state " + currentState);
                 move(t);
+                numberOfTransitions++;
             }
         }
     }
@@ -79,6 +82,7 @@ public class runtm {
             br.close();
             if (!printDisabled) System.out.println("Input " + inputString);
             numberOfCells = 0;
+            lengthOfInput = inputString.length();
             for (int i = 0; i < inputString.length(); i++) {
                 if (i == 0) {
                     initialCell = new TMCell(String.valueOf(inputString.charAt(i)));
