@@ -1,0 +1,10 @@
+states 3
+s
+s1
+a +
+alphabet 2 0 1
+s 0 a 1 S
+s 1 s1 0 R
+s1 1 s1 0 R
+s1 0 a 1 S
+s1 _ a 1 S
