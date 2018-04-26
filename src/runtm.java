@@ -171,7 +171,11 @@ public class runtm {
             case "R":
                 moveRight();
                 break;
+            case "S":
+                break;
             default:
+                System.out.println("Bad Input");
+                System.exit(0);
                 break;
         }
         currentState = t.getNextState();
