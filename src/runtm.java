@@ -12,8 +12,8 @@ public class runtm {
     private int currentCellNumber;
     private int numberOfCells;
     private boolean printDisabled = false;
-    private int numberOfTransitions = 0;
-    private int lengthOfInput = 0;
+    private int numberOfTransitions;
+    private int lengthOfInput;
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -37,7 +37,7 @@ public class runtm {
     }
 
     public static void main(String[] args) {
-        if (args.length != 2) {
+        if (args.length < 2) {
             System.out.println("Error In Arguments, must be Turing Filename, and Input filename");
         }
         File f1 = new File(args[0]);
