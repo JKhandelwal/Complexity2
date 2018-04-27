@@ -12,7 +12,7 @@ public class runtm {
     private int currentCellNumber;
     private int numberOfCells;
     private boolean printDisabled = false;
-    private int numberOfTransitions= 0;
+    private int numberOfTransitions = 0;
     private int lengthOfInput = 0;
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -32,11 +32,12 @@ public class runtm {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public runtm(boolean p){
+    public runtm(boolean p) {
         printDisabled = p;
     }
+
     public static void main(String[] args) {
-        if (args.length != 2){
+        if (args.length != 2) {
             System.out.println("Error In Arguments, must be Turing Filename, and Input filename");
         }
         File f1 = new File(args[0]);
@@ -44,7 +45,7 @@ public class runtm {
         runtm t = new runtm(true);
         if (t.run(f1, f2)) System.out.println("ACCEPTING");
         else System.out.println("NOT ACCEPTING");
-        System.out.println("Input size is " + t.lengthOfInput + " Number of Transitions "+  t.numberOfTransitions );
+        System.out.println("Input size is " + t.lengthOfInput + " Number of Transitions " + t.numberOfTransitions);
         t.print();
     }
 
@@ -67,7 +68,7 @@ public class runtm {
                     return false;
                 }
             } else {
-                if(!printDisabled) System.out.println("Next state " + currentState);
+                if (!printDisabled) System.out.println("Next state " + currentState);
                 move(t);
                 numberOfTransitions++;
             }
@@ -82,6 +83,7 @@ public class runtm {
             br.close();
             if (!printDisabled) System.out.println("Input " + inputString);
             numberOfCells = 0;
+            numberOfTransitions = 0;
             lengthOfInput = inputString.length();
             for (int i = 0; i < inputString.length(); i++) {
                 if (i == 0) {
@@ -234,5 +236,13 @@ public class runtm {
             if (i != s.length - 1) System.out.print(", ");
         }
         System.out.print("]\n\n");
+    }
+
+    public int getNumberOfTransitions() {
+        return numberOfTransitions;
+    }
+
+    public int getLengthOfInput(){
+        return lengthOfInput;
     }
 }
